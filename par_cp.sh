@@ -1,4 +1,5 @@
 #!/bin/bash  
+#Author: Vignesh Sathyaseelan (vsathyas@purdue.edu)
 
 function traverse () {
 for file in "$1"/*; do
