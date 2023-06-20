@@ -14,10 +14,8 @@ args = parser.parse_args()
 
 def main(argv):
 
-    arr = [(i,count_i) for count_i,i in enumerate(args.smile.split())]
-    
     with Pool(mp.cpu_count()) as p:
-        result = p.starmap(get_xyz_frm_smi,arr)
+        result = p.starmap(get_xyz_frm_smi,[(i,count_i) for count_i,i in enumerate(args.smile.split())])
 
     return
 
