@@ -9,7 +9,7 @@ from rdkit import Chem,RDLogger
 from rdkit.Chem import AllChem
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-s',dest='smile', type=str, help= 'space delimited smile strings')
+parser.add_argument('-s',dest='smile', type=str, help='space delimited smile strings')
 args = parser.parse_args()
 
 def main(argv):
