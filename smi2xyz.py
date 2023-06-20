@@ -41,6 +41,8 @@ def get_xyz_frm_smi(smile,out_dir='xyz_folder',out_name='0',steps = 10000,forcef
         cmd = 'obabel {} -O {} --sd --minimize --steps {} --ff {} --gen3d'.format(tmp_filename,xyzf,steps,forcefield)
         output = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,bufsize=-1).wait()
         os.remove(tmp_filename)
+
+    else: print(f'{smile} is a invalid smile')
         
         return 
     
