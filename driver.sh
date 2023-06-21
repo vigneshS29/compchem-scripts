@@ -8,7 +8,7 @@
 #SBATCH -o output.txt
 #SBATCH -e error.txt
 
-for file in $1*; do
+for file in $5*; do
     # Run several instances parallely 
     python /home/vsathyas/bin/GA/GA/driver_xtb.py -f /home/vsathyas/bin/GA/GA/$file >> data.txt & 
 done
