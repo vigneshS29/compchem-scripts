@@ -2,8 +2,8 @@
 
 #SBATCH --job-name $1
 #SBATCH -n $2
-#SBATCH -t 00:30:00
-#SBATCH -A $3
+#SBATCH -t $3
+#SBATCH -A $4
 #SBATCH -o output.txt
 #SBATCH -e error.txt
 
