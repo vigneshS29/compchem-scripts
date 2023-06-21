@@ -9,13 +9,21 @@ from rdkit import Chem,RDLogger
 from rdkit.Chem import AllChem
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-s',dest='smile', type=str, help='space delimited smile strings')
+parser.add_argument('-s',dest='smile', type=str, help= 'space delimited smile strings')
+parser.add_argument('-o',dest='outname', type=str, default='xyz_folder', help= 'name of output folder')
 args = parser.parse_args()
 
 def main(argv):
 
+    xyz_folder = "{}/{}".format(os.getcwd(),args.outname)
+    
+    if os.path.exists(xyz_folder) is False: 
+        os.mkdir(xyz_folder)
+
+    arr = [(i,count_i,xyz_folder) for count_i,i in enumerate(args.smile.split())]
+    
     with Pool(mp.cpu_count()) as p:
-        result = p.starmap(get_xyz_frm_smi,[(i,count_i) for count_i,i in enumerate(args.smile.split())])
+        result = p.starmap(get_xyz_frm_smi,arr)
 
     return
 
@@ -29,20 +37,15 @@ def check_validity(smile):
         validity =  True
     return validity
 
-def get_xyz_frm_smi(smile,out_name,out_dir='xyz_folder',steps=10000,forcefield='uff'):
-    
-    xyz_folder = "{}/{}".format(os.getcwd(),out_dir)
-    
-    if os.path.exists(xyz_folder) is False: 
-        os.mkdir(xyz_folder)
-    
+def get_xyz_frm_smi(smile,out_name,out_folder,steps=10000,forcefield='uff'):
+  
     m = Chem.MolFromSmiles(smile)
     if check_validity(smile):
         m2= Chem.AddHs(m)
         AllChem.EmbedMolecule(m2)
         tmp_filename = f'{out_name}.tmp.mol'
         with open(tmp_filename,'w') as g: g.write(Chem.MolToMolBlock(m2))
-        xyzf = '{}/{}.xyz'.format(xyz_folder,out_name)
+        xyzf = '{}/{}.xyz'.format(out_folder,out_name)
         cmd = 'obabel {} -O {} --sd --minimize --steps {} --ff {} --gen3d'.format(tmp_filename,xyzf,steps,forcefield)
         output = subprocess.Popen(cmd, shell=True, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE,bufsize=-1).wait()
         os.remove(tmp_filename)
