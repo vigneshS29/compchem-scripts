@@ -1,6 +1,7 @@
 #!/bin/bash                                                                                 
 
 #SBATCH --job-name $1
+#SBATCH -N 1
 #SBATCH -n $2
 #SBATCH -t $3
 #SBATCH -A $4
