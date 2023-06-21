@@ -1,6 +1,6 @@
-import os, sys, argparse, subprocess, pickle, numpy as np
+import os, sys, copy, shutil, time, argparse, subprocess, pickle, numpy as np
 from multiprocessing import Pool
-from xtb_functions import *
+from rdkit import AllChem, Chem, DataStructs
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-f',dest='in_file_name' ,type=str, default = 'test.p', help ='file to read')
