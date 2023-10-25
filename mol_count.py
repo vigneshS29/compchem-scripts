@@ -21,7 +21,7 @@ def main(argv):
 ## Uses the number of 0 eigenvalues of the Graph Laplacian to count the number of connected components (Molecules)
 def mol_count(file):
 
-    A = Table_generator(*xyz_parse('0.xyz'))
+    A = Table_generator(*xyz_parse(file))
     D = np.diag(A.sum(axis=1))
 
     return (eigvals(D-A) < 10**-10).sum()
