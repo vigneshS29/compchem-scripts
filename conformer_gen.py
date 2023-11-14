@@ -69,7 +69,7 @@ def main(argv):
                 PE = [P_m.GetAtomWithIdx(atom).GetSymbol() for atom in range(P_m.GetNumAtoms())]
                 PG = np.array([[Pconf.GetAtomPosition(atom).x, Pconf.GetAtomPosition(atom).y, Pconf.GetAtomPosition(atom).z] for atom in range(P_m.GetNumAtoms())])
                 Pname = work_folder+'/ini-inputs/'+'{}_{}.xyz'.format(P_index,count_Pconf)
-                xyz_write(work_folder+'/ini-inputs/'+'{}_{}.xyz'.format(P_index,count_Pconf),PE,PG)
+                xyz_write(Pname,PE,PG)
                 
                 os.system('cat {} {} >> {}'.format(Rname,Pname,work_folder+'/conf-folder/'+'{}_{}.xyz'.format(k.split('/')[-1].split('.xyz')[0],count)))
                 count+=1
