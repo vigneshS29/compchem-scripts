@@ -1,5 +1,5 @@
+#Author: Vignesh Sathyaseelan (vsathyas@purdue.edu)
 import time,io
-
 
 '''
 Progress Bar Wrapper
@@ -16,6 +16,7 @@ Files to add progress indicators for file operations.
 enumerate for iterations where both index and value are needed.
 
 '''
+
 def prange(iterable,total=None,static=None):
     start = time.time()
     if isinstance(iterable, enumerate):
