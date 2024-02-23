@@ -18,6 +18,7 @@ enumerate for iterations where both index and value are needed.
 '''
 
 def prange(iterable,total=None,static=None):
+    
     start = time.time()
     if isinstance(iterable, enumerate):
         if total == None: raise ValueError ('Please Provide total in case of enumerate')
