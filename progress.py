@@ -4,9 +4,9 @@ import time,io
 '''
 Progress Bar Wrapper
 
- This Python script provides a flexible progress bar wrapper to enhance your iterative processes.
+This Python script provides a flexible progress bar wrapper to enhance your iterative processes.
 
- Features
+Features:
 
 Adaptable: Works seamlessly with:
 range objects for tracking progress over a known range of iterations.
