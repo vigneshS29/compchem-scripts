@@ -53,4 +53,4 @@ def prange(iterable,total=None,static=None):
             if static: print(f" \r Progress (Iterate) : {progress_bar} {percent_complete:.2f}% Time: {time.time() - start:.10f}s", end="") 
             else: print(f"Progress (Iterate) : {progress_bar} {percent_complete:.2f}% Time: {time.time() - start:.10f}s \n", end="") 
             yield(item)
-return
+    return
