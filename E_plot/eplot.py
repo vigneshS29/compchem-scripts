@@ -13,7 +13,7 @@ args = parser.parse_args()
 
 def main(argv):
 
-    color_list = ['red','blue']
+    color_list = ['red','blue']  # Update based on number of different channels to plot
 
     data = read_data(args.file_path)
 
