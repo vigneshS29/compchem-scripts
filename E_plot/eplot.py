@@ -26,7 +26,7 @@ def main(argv):
             xtemp = [x[i],x[i+1]]
             ytemp = [y[i],y[i+1]]
             
-            if args.func == 'exp': new_x,new_y = exponential_func(xtemp,ytemp)
+            if args.func == 'exponential': new_x,new_y = exponential_func(xtemp,ytemp)
             if args.func == 'gaussian': new_x,new_y = gaussian_func(xtemp,ytemp)
             
             plt.plot(new_x, new_y,color='black',alpha=0.5)
