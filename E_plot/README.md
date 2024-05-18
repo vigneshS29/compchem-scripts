@@ -11,4 +11,4 @@ Usage:
 - It will generate a energy diagram plot with a user specifed name.
 - Use python energy_plot.py -h to get more information on input arguments.
 
-![plot](./Example/plot.png)
+![Example](./Example/plot.png)
