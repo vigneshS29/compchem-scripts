@@ -7,4 +7,4 @@ Usage:
 - You can choose bettwen a exponential and gaussian spline to connect the transition states to the ground states. 
 - Use python energy_plot.py -h to get more information on input arguments.
 
-![Example](./example/plot.png)
+![Example](./Example/plot.png)
