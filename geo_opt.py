@@ -22,9 +22,11 @@ def write_xyz(filename, atoms, energy):
 def main():
     parser = argparse.ArgumentParser(description="Optimize geometry and output xyz with energy.")
     parser.add_argument("input_xyz", help="Input .xyz file")
-    parser.add_argument("--functional", default="wb97x-d3bj", help="DFT functional (default: wb97x-d3bj)")
+    parser.add_argument("--functional", default="b3lyp-d3bj", help="DFT functional (default: wb97x-d3bj)")
     parser.add_argument("--basis", default="def2-tzvp", help="Basis set (default: def2-tzvp)")
     parser.add_argument("--output", default="optimized.xyz", help="Output xyz file")
+    parser.add_argument("--charge", type=int, default=0, help="Molecular charge (default: 0)")
+    parser.add_argument("--spin", type=int, default=0, help="2S (number of unpaired electrons, default: 0 for singlet)")
     args = parser.parse_args()
 
     natoms, comment, atom_lines = read_xyz(args.input_xyz)
@@ -33,19 +35,34 @@ def main():
     mol = gto.Mole()
     mol.atom = atom_string
     mol.basis = args.basis
+    mol.charge = args.charge
+    mol.spin = args.spin
+    mol.verbose = 4
     mol.build()
 
+    # Robust SCF settings
     mf = dft.RKS(mol)
+    mf.conv_tol = 1e-6
+    mf.max_cycle = 200
+    mf.level_shift = 0.3
+    mf.damp = 0.2
+    mf.init_guess = 'minao'
     mf.xc = args.functional
-    mol_opt = optimize(mf, maxsteps=100)
+    
+    mol_opt = optimize(mf, maxsteps=1000)
 
+    '''
+    if not mf.converged:
+        print("ERROR: SCF did not converge!")
+        quit()
+    '''
     # Get final energy
-    mf_final = dft.RKS(mol_opt)
+    mf_final = dft.UKS(mol_opt)
     mf_final.xc = args.functional
     energy = mf_final.kernel()
 
     # Prepare xyz lines
-    coords = mol_opt.atom_coords()
+    coords = mol_opt.atom_coords() * 0.52917721092  # Convert Bohr to Angstrom
     symbols = [atom[0] for atom in mol_opt._atom]
     xyz_lines = [f"{sym} {x:.8f} {y:.8f} {z:.8f}" for sym, (x, y, z) in zip(symbols, coords)]
 
