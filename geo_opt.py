@@ -22,7 +22,7 @@ def write_xyz(filename, atoms, energy):
 def main():
     parser = argparse.ArgumentParser(description="Optimize geometry and output xyz with energy.")
     parser.add_argument("input_xyz", help="Input .xyz file")
-    parser.add_argument("--functional", default="b3lyp-d3bj", help="DFT functional (default: wb97x-d3bj)")
+    parser.add_argument("--functional", default="wb97x-d3bj", help="DFT functional (default: wb97x-d3bj)")
     parser.add_argument("--basis", default="def2-tzvp", help="Basis set (default: def2-tzvp)")
     parser.add_argument("--output", default="optimized.xyz", help="Output xyz file")
     parser.add_argument("--charge", type=int, default=0, help="Molecular charge (default: 0)")
@@ -51,13 +51,8 @@ def main():
     
     mol_opt = optimize(mf, maxsteps=1000)
 
-    '''
-    if not mf.converged:
-        print("ERROR: SCF did not converge!")
-        quit()
-    '''
     # Get final energy
-    mf_final = dft.UKS(mol_opt)
+    mf_final = dft.RKS(mol_opt)
     mf_final.xc = args.functional
     energy = mf_final.kernel()
 
